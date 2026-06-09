@@ -12,6 +12,7 @@
 ```
 proyecto/
 ├── src/
+|   ├── exploracion_datos.py    → implementación de una exploración inicial de los datos
 │   ├── andrews.py              → implementación análisis
 │   └── sublevel_persistence.py → implementación de la  persistencia de un subnivel.
 
