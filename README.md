@@ -1,5 +1,5 @@
 # Proyecto semestral CC5514-1 Análisis Topológico de Datos: TDA Aplicado a las Curvas de Andrews
-## Filtración de Subniveles y Firmas Topológicas de Curvas Individuales
+## Robustez y Estabilidad de Firmas Topológicas de Curvas de Andrews
 #### Integrantes:
 * Amaranta Godoy
 * Felipe Quilodrán
