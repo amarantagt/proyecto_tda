@@ -33,6 +33,21 @@ def formula_curva_andrews(x, t):
 
     return resultado
 
+# Función encode, toma una fila de los datos y los convierte en una curva de andrews 
+def encode(x_i, N = 256):
+    t1 = np.linspace(-np.pi, np.pi, N)
+    return formula_curva_andrews(x_i, t1)
+
+# Función encode dataset
+def encode_dataset(X, N = 256):
+    curvas = [] # Inicializamos una lista para guardar las curvas de Andrews de las filas del dataset
+
+    for fila in X:  
+        encode_fila = encode(fila, N)   # Usamos encode para todas la fila
+        curvas.append(encode_fila)      # Agregamos encode_fila a la lista de curvas
+
+    return np.array(curvas)             # Se devuelve el arreglo de las curvas
+
 # Función para graficar las curvas de andrews
 def graficar_andrews(X_norm, y_clase, titulo, nombre_guardar):
 
