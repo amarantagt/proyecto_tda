@@ -36,6 +36,15 @@ PROYECTO_TDA/
 └── README.md
 ```
 
-## Compilación del proyecto
+## Ejecución del proyecto
+Para realizar la exploración de datos y guardarla en resultado_exploracion.txt
 
+```bash
+python3 src/exploracion_datos.py > resultado_exploracion.txt
+```
+
+Para revisar los resultados de las pruebas de andrews.py 
+```bash
+python3 src/andrews.py 
+```
 ## Resultados generados
