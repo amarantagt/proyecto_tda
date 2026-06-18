@@ -68,7 +68,7 @@ def graficar_andrews(X_norm, y_clase, titulo, nombre_guardar):
     t = np.linspace(-np.pi, np.pi, 250)
     
     clases_unicas = np.unique(y_final)
-    mapa_colores = plt.cm.get_cmap('plasma', len(clases_unicas))
+    mapa_colores = plt.colormaps['plasma'].resampled(len(clases_unicas))
     color_dict = {clase: mapa_colores(i) for i, clase in enumerate(clases_unicas)}
     
     # Construcción matemática de las curvas de Andrews
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     # =====================================================================
     # BLOQUE 1: VINO TINTO 
     # =====================================================================
-    df_red = pd.read_csv("../data/winequality-red.csv", sep=";")
+    df_red = pd.read_csv("data/winequality-red.csv", sep=";")
     y_red = df_red["quality"]
     X_red = df_red.drop(columns=["quality"]).values
     
@@ -113,25 +113,25 @@ if __name__ == "__main__":
     X_red_minmax = normalizacion(X_red, metodo="minmax")
     graficar_andrews(X_red_minmax, y_red, 
                      titulo="Vino Tinto - Normalización Min-Max", 
-                     nombre_guardar="../figures/tinto_minmax.png")
+                     nombre_guardar="figures/tinto_minmax.png")
     
     # Grafico 2: Tinto + Z-Score
     X_red_zscore = normalizacion(X_red, metodo="zscore")
     graficar_andrews(X_red_zscore, y_red, 
                      titulo="Vino Tinto - Normalización Z-Score", 
-                     nombre_guardar="../figures/tinto_zscore.png")
+                     nombre_guardar="figures/tinto_zscore.png")
                      
     # Grafico 3: Tinto + Robusto
     X_red_robust = normalizacion(X_red, metodo="robust")
     graficar_andrews(X_red_robust, y_red, 
                      titulo="Vino Tinto - Normalización Robusta (Mediana/IQR)", 
-                     nombre_guardar="../figures/tinto_robust.png")
+                     nombre_guardar="figures/tinto_robust.png")
 
 
     # =====================================================================
     # BLOQUE 2: VINO BLANCO 
     # =====================================================================
-    df_white = pd.read_csv("../data/winequality-white.csv", sep=";")
+    df_white = pd.read_csv("data/winequality-white.csv", sep=";")
     y_white = df_white["quality"]
     X_white = df_white.drop(columns=["quality"]).values
     
@@ -139,16 +139,19 @@ if __name__ == "__main__":
     X_white_minmax = normalizacion(X_white, metodo="minmax")
     graficar_andrews(X_white_minmax, y_white, 
                      titulo="Vino Blanco - Normalización Min-Max", 
-                     nombre_guardar="../figures/blanco_minmax.png")
+                     nombre_guardar="figures/blanco_minmax.png")
     
     # Grafico 5: Blanco + Z-Score
     X_white_zscore = normalizacion(X_white, metodo="zscore")
     graficar_andrews(X_white_zscore, y_white, 
                      titulo="Vino Blanco - Normalización Z-Score", 
-                     nombre_guardar="../figures/blanco_zscore.png")
+                     nombre_guardar="figures/blanco_zscore.png")
                      
     # Grafico 6: Blanco + Robusto
     X_white_robust = normalizacion(X_white, metodo="robust")
     graficar_andrews(X_white_robust, y_white, 
                      titulo="Vino Blanco - Normalización Robusta (Mediana/IQR)", 
-                     nombre_guardar="../figures/blanco_robust.png")
+                     nombre_guardar="figures/blanco_robust.png")
+    
+    curve = encode(X_red_zscore[0])
+    print(curve.shape)
