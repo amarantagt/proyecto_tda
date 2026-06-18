@@ -13,7 +13,7 @@ def normalizacion(X, metodo = "zscore"):
     elif metodo == "robust":
         return RobustScaler().fit_transform(X)
     else:
-        print("Se recibió un método desconocido")
+        print("Se recibió un método no soportado")
 
 # Definimos la fórmula para las curvas de andrews como se menciona en el enunciado
 def formula_curva_andrews(x, t):

@@ -10,7 +10,7 @@
 ## Estructura del proyecto
 
 ```
-proyecto/
+PROYECTO_TDA/
 ├── src/
 |   ├── exploracion_datos.py    → implementación de una exploración inicial de los datos.
 │   ├── andrews.py              → implementación de la normalización y generación de Curvas de Andrews.
@@ -24,7 +24,13 @@ proyecto/
 |   ├── boxplot_vino_blanco.png                 → boxplot dataset 2
 |   ├── boxplot_vino_tinto.png                  → boxplot dataset 1
 |   ├── distribucion_calidad_vino_blanco.png    → gráfico de distribución de calidad del dataset 2
-|   └── distribucion_calidad_vino_tinto.png     → gráfico de distribución de calidad del dataset 1
+|   ├── distribucion_calidad_vino_tinto.png     → gráfico de distribución de calidad del dataset 1
+|   ├── blanco_minmax.png
+|   ├── blanco_robust.png
+|   ├── blanco_zscore.png
+|   ├── tinto_minmax.png
+|   ├── tinto_robust.png
+|   └── tinto_zscore.png
 ├── resultado_exploracion.txt   → resultados de la ejecución de exploracion_datos.py
 ├── .gitignore
 └── README.md
