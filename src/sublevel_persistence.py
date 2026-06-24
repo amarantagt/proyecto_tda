@@ -1,4 +1,5 @@
 import gudhi as gd
+import gudhi.wasserstein import wasserstein_distance
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -8,6 +9,39 @@ from andrews import encode, normalizacion
 Tiene como objetivo implementar el cálculo los diagramas de persistencia de un set de 
 datos y sus estadísticas topológicas
 """
+# Construimos funciones auxiliares para manejar correctamente el
+# lifetime infinito
+
+ # Función finite_diagram, devuelve los intervalos con muerte finita
+def finite_diagram(diagram):
+    if len(diagram) == 0 :
+        return diagram
+    
+    return diagram[np.isfinite(diagram[:, 1])]
+
+# Función diagram_for_plot, reemplaza muertes infinias por un valor más grande
+def diagram_for_plot(diagram, margin = 0.1):
+    if len(diagram) == 0:
+        return diagram
+    
+    # Hacemos una copia del diagrama
+    diagram_plot = diagram.copy()
+    finite = diagram_plot[np.isfinite(diagram_plot[:, 1])]
+
+    # Si no hay intervalos con lifetimes con muertes finitas
+    # se reemplaza la muerte infinita con 1.0
+    if len(finite) == 0:
+        replacement = 1.0
+    # Si existen intervalos con muertes finitas, se reemplazan las muertes infinitas
+    # con el número máximo y un margen.
+    else:
+        replacement = np.max(finite[:, 1] * (1 + margin))
+    
+    diagram_plot[np.isinf(diagram_plot[:, 1]), 1] = replacement
+    return diagram_plot
+
+
+
 # Función persistence_diagrams, calcula el diagrama de persistencia de una curva
 def persistence_diagrams(curve):
     curve = np.asarray(curve) # Nos aseguramos que curve sea un arreglo
