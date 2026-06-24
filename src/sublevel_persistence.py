@@ -41,7 +41,6 @@ def diagram_for_plot(diagram, margin = 0.1):
     return diagram_plot
 
 
-
 # Función persistence_diagrams, calcula el diagrama de persistencia de una curva
 def persistence_diagrams(curve):
     curve = np.asarray(curve) # Nos aseguramos que curve sea un arreglo
@@ -58,14 +57,15 @@ def persistence_diagrams(curve):
 
 # Ahora calculamos la persistencia total
 def total_persistence(diagram):
+    diagram = finite_diagram(diagram) # Ahora en el total solo consideraremos los que tienen muerte finita
     if len(diagram) == 0:
         return 0.0
     lifetimes = diagram[:,1] - diagram[:,0] # Hacemos la resta death - birth
-
     return np.sum(lifetimes) # Retornamos las sumas de todas las vidas.
 
 #  Calculamos la persistencia máxima encontrada.
 def max_lifetime(diagram):
+    diagram = finite_diagram(diagram)
     if len(diagram) == 0:
         return 0.0
     lifetimes = diagram[:, 1] - diagram[:, 0]
@@ -73,6 +73,7 @@ def max_lifetime(diagram):
 
 # Función count_pairs, cuenta cuántos intervalos sobreviven más que un umbral tau
 def count_pairs(diagram, tau = 0.1):
+    diagram = finite_diagram(diagram)
     if len(diagram) == 0:
         return 0  
     lifetimes = diagram[:, 1] - diagram[:, 0]
@@ -80,6 +81,7 @@ def count_pairs(diagram, tau = 0.1):
 
 # Calculamos la entropía persistente
 def persistent_entropy(diagram):
+    diagram = finite_diagram(diagram)
     if len(diagram) == 0:
         return 0.0
     
