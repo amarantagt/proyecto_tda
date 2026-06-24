@@ -32,6 +32,7 @@ PROYECTO_TDA/
 |   ├── tinto_robust.png                        → normalización de curvas dataset 1 con robust.
 |   └── tinto_zscore.png                        → normalización de curvas dataset 1 con zscore.
 ├── resultado_exploracion.txt                   → resultados de la ejecución de exploracion_datos.py
+├── prueba_sublevel_persistence.txt             → resultados de la ejecución de sublevel_persistence.py
 ├── .gitignore
 └── README.md
 ```
@@ -47,6 +48,11 @@ Para revisar los resultados de las pruebas de andrews.py
 ```bash
 python3 src/andrews.py 
 ```
+Para realizar las pruebas de sublevel_persistence.py
+```bash
+python3 src/sublevel_persistence.py > prueba_sublevel_persistence.txt
+```
+
 ## Resultados generados
 De la exploración de dato se crean los archivos:
 
@@ -64,3 +70,5 @@ De las pruebas de andrews.py se generan las imágenes correspondientes a las nor
 * tinto_robust.png
 * blanco_zscore.png
 * tinto_zscore.png
+
+De las pruebas de sublevel_persistence.py se generan un resumen de los resultados en prueba_sublevel_persistence.txt
