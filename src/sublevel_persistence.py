@@ -1,5 +1,6 @@
 import gudhi as gd
-import gudhi.wasserstein import wasserstein_distance
+from gudhi import bottleneck_distance
+from gudhi.wasserstein import wasserstein_distance
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -95,6 +96,30 @@ def persistent_entropy(diagram):
 
     return -np.sum(p * np.log(p))
 
+# Funciones para implementar distancias entre diagramas
+
+# Distancia bottleneck
+def bottleneck(H_a, H_b):
+    H_a = finite_diagram(H_a)
+    H_b = finite_diagram(H_b)
+
+    if len(H_a) == 0 and len(H_b) == 0:
+        return 0.0
+    
+    return bottleneck_distance(H_a, H_b)
+
+# Distancia wasserstein
+def wasserstein(H_a, H_b):
+    H_a = finite_diagram(H_a)
+    H_b = finite_diagram(H_b)
+
+    if len(H_a) == 0 and len(H_b) == 0:
+        return 0.0
+    
+    return wasserstein_distance(H_a, H_b)
+
+
+
 # La función topological_isgnature utiliza reune a las funciones anteriores
 # para calcular los diagramas de persistencia y estadísticas de una curva.
 def topological_signature(curve, tau = 0.1):
@@ -130,4 +155,14 @@ if __name__ == "__main__":
     X = normalizacion(X, metodo="zscore")
     curve = encode(X[0], N=256)
     resultado = topological_signature(curve)
+
+    print("\nFirma topológica:\n")
     print(resultado)
+
+    H0, H1 = persistence_diagrams(curve)
+
+    print("\nH0:")
+    print(H0)
+
+    print("\nH1:")
+    print(H1)
