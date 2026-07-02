@@ -1,0 +1,4 @@
+sample=613: 5 puntos totales en H0, 4 finitos
+sample=486: 5 puntos totales en H0, 4 finitos
+sample=1102: 5 puntos totales en H0, 4 finitos
+sample=529: 5 puntos totales en H0, 4 finitos

@@ -1,0 +1,61 @@
+Variabilidad por normalizacion:
+
+configuracion        estadistica     media      std       cv
+       minmax            n_pares  5.030000 0.744746 0.148061
+       minmax persistencia_total  3.660913 0.963620 0.263219
+       minmax        vida_maxima  1.807057 0.294993 0.163245
+       minmax           entropia  1.116339 0.177423 0.158933
+       zscore            n_pares  4.890000 0.723278 0.147910
+       zscore persistencia_total 11.495632 5.040827 0.438499
+       zscore        vida_maxima  5.104099 2.121245 0.415596
+       zscore           entropia  1.131586 0.234825 0.207519
+       robust            n_pares  4.650000 0.770347 0.165666
+       robust persistencia_total 10.130542 7.175657 0.708319
+       robust        vida_maxima  4.903304 4.027935 0.821474
+       robust           entropia  1.047522 0.287127 0.274101
+
+Variabilidad por perturbacion:
+
+ configuracion tipo_ruido  magnitud        estadistica     media      std       cv
+  acotado_0.01    acotado      0.01            n_pares  4.890000 0.723278 0.147910
+  acotado_0.01    acotado      0.01 persistencia_total 11.489010 5.045439 0.439154
+  acotado_0.01    acotado      0.01        vida_maxima  5.102310 2.121157 0.415725
+  acotado_0.01    acotado      0.01           entropia  1.131512 0.233897 0.206712
+  acotado_0.05    acotado      0.05            n_pares  4.880000 0.670896 0.137479
+  acotado_0.05    acotado      0.05 persistencia_total 11.549400 5.021047 0.434745
+  acotado_0.05    acotado      0.05        vida_maxima  5.127741 2.111519 0.411783
+  acotado_0.05    acotado      0.05           entropia  1.132254 0.241903 0.213647
+   acotado_0.1    acotado      0.10            n_pares  4.910000 0.683056 0.139115
+   acotado_0.1    acotado      0.10 persistencia_total 11.517810 5.007766 0.434785
+   acotado_0.1    acotado      0.10        vida_maxima  5.136636 2.135219 0.415684
+   acotado_0.1    acotado      0.10           entropia  1.132491 0.227148 0.200574
+   acotado_0.2    acotado      0.20            n_pares  4.880000 0.700361 0.143517
+   acotado_0.2    acotado      0.20 persistencia_total 11.731993 5.035460 0.429208
+   acotado_0.2    acotado      0.20        vida_maxima  5.153056 2.141933 0.415663
+   acotado_0.2    acotado      0.20           entropia  1.144169 0.223780 0.195583
+   acotado_0.5    acotado      0.50            n_pares  4.860000 0.696601 0.143333
+   acotado_0.5    acotado      0.50 persistencia_total 11.874777 5.163152 0.434800
+   acotado_0.5    acotado      0.50        vida_maxima  5.308680 2.240108 0.421971
+   acotado_0.5    acotado      0.50           entropia  1.118902 0.222227 0.198611
+gaussiano_0.01  gaussiano      0.01            n_pares  4.890000 0.694786 0.142083
+gaussiano_0.01  gaussiano      0.01 persistencia_total 11.499675 5.047941 0.438964
+gaussiano_0.01  gaussiano      0.01        vida_maxima  5.107306 2.125153 0.416101
+gaussiano_0.01  gaussiano      0.01           entropia  1.132103 0.234109 0.206792
+gaussiano_0.05  gaussiano      0.05            n_pares  4.860000 0.710953 0.146287
+gaussiano_0.05  gaussiano      0.05 persistencia_total 11.500582 5.037254 0.438000
+gaussiano_0.05  gaussiano      0.05        vida_maxima  5.087174 2.135707 0.419822
+gaussiano_0.05  gaussiano      0.05           entropia  1.133175 0.235043 0.207419
+ gaussiano_0.1  gaussiano      0.10            n_pares  4.880000 0.755853 0.154888
+ gaussiano_0.1  gaussiano      0.10 persistencia_total 11.534920 5.130607 0.444789
+ gaussiano_0.1  gaussiano      0.10        vida_maxima  5.131584 2.177229 0.424280
+ gaussiano_0.1  gaussiano      0.10           entropia  1.126296 0.228489 0.202868
+ gaussiano_0.2  gaussiano      0.20            n_pares  4.780000 0.746439 0.156159
+ gaussiano_0.2  gaussiano      0.20 persistencia_total 11.711156 5.024897 0.429069
+ gaussiano_0.2  gaussiano      0.20        vida_maxima  5.227651 2.134195 0.408251
+ gaussiano_0.2  gaussiano      0.20           entropia  1.114328 0.237514 0.213146
+ gaussiano_0.5  gaussiano      0.50            n_pares  4.850000 0.729951 0.150505
+ gaussiano_0.5  gaussiano      0.50 persistencia_total 13.294203 5.656430 0.425481
+ gaussiano_0.5  gaussiano      0.50        vida_maxima  5.918353 2.255855 0.381163
+ gaussiano_0.5  gaussiano      0.50           entropia  1.105918 0.230382 0.208317
+
+Resultados guardados correctamente.

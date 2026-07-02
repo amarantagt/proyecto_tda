@@ -6,7 +6,11 @@ from andrews import encode, normalizacion
 from sublevel_persistence import (
     persistence_diagrams,
     bottleneck,
-    wasserstein
+    wasserstein,
+    count_pairs,
+    total_persistence,
+    max_lifetime,
+    persistent_entropy
 )
 
 """
@@ -124,6 +128,131 @@ def normalization_experiment(
 
     return pd.DataFrame(resultados)
 
+# Estadísticas topológicas por normalización (número de intervalos,
+# intervalos con persistencia > tau, persistencia total, vida máxima
+# y entropía persistente)
+def normalization_statistics_single(
+    X_minmax,
+    X_zscore,
+    X_robust,
+    idx,
+    N=256,
+    tau=0.1
+):
+    """
+    Calcula las estadísticas topológicas del diagrama H0 para una misma
+    observación normalizada con Min-Max, Z-Score y Robust Scaling.
+    """
+
+    datasets = {
+        "minmax": X_minmax,
+        "zscore": X_zscore,
+        "robust": X_robust
+    }
+
+    resultados = {}
+
+    for nombre, X in datasets.items():
+
+        curva = encode(X[idx], N=N)
+        H0, H1 = persistence_diagrams(curva)
+
+        resultados[f"n_pares_{nombre}"] = len(H0)
+        resultados[f"n_pares_tau_{nombre}"] = count_pairs(H0, tau=tau)
+        resultados[f"persistencia_total_{nombre}"] = total_persistence(H0)
+        resultados[f"vida_maxima_{nombre}"] = max_lifetime(H0)
+        resultados[f"entropia_{nombre}"] = persistent_entropy(H0)
+
+    return resultados
+
+
+def normalization_statistics_experiment(
+    X,
+    n_samples=100,
+    N=256,
+    tau=0.1
+):
+    """
+    Ejecuta el cálculo de estadísticas topológicas (H0) sobre un
+    subconjunto del dataset, para cada una de las tres normalizaciones.
+
+    Retorna un DataFrame con, para cada observación muestreada, el
+    número de intervalos, el número de intervalos con persistencia > tau,
+    la persistencia total, la vida máxima y la entropía persistente,
+    calculados con Min-Max, Z-Score y Robust Scaling.
+    """
+
+    X_minmax = normalizacion(X, metodo="minmax")
+    X_zscore = normalizacion(X, metodo="zscore")
+    X_robust = normalizacion(X, metodo="robust")
+
+    np.random.seed(42)
+
+    indices = np.random.choice(
+        len(X),
+        size=min(n_samples, len(X)),
+        replace=False
+    )
+
+    resultados = []
+
+    for idx in indices:
+
+        resultado = normalization_statistics_single(
+            X_minmax,
+            X_zscore,
+            X_robust,
+            idx,
+            N,
+            tau
+        )
+
+        resultado["sample"] = idx
+
+        resultados.append(resultado)
+
+    return pd.DataFrame(resultados)
+
+
+# Gráfico comparativo de las 5 estadísticas topológicas
+def plot_statistics_comparison(df):
+    """
+    Genera un boxplot por cada una de las 5 estadísticas topológicas
+    (número de intervalos, intervalos con persistencia > tau,
+    persistencia total, vida máxima, entropía persistente), comparando
+    las tres normalizaciones. Los gráficos se guardan en figures/.
+    """
+
+    estadisticas = [
+        ("n_pares", "Numero de intervalos persistentes"),
+        ("n_pares_tau", "Intervalos con persistencia > tau"),
+        ("persistencia_total", "Persistencia total"),
+        ("vida_maxima", "Vida maxima observada"),
+        ("entropia", "Entropia persistente")
+    ]
+
+    metodos = ["minmax", "zscore", "robust"]
+
+    for prefijo, titulo in estadisticas:
+
+        plt.figure(figsize=(8, 5))
+
+        plt.boxplot([df[f"{prefijo}_{m}"] for m in metodos])
+
+        plt.xticks(
+            [1, 2, 3],
+            ["Min-Max", "Z-Score", "Robusto"]
+        )
+
+        plt.ylabel(titulo)
+        plt.title(f"{titulo} segun normalizacion")
+
+        plt.tight_layout()
+
+        plt.savefig(f"figures/normalization_{prefijo}.png")
+
+        plt.close()
+
 
 # Gráfico Bottleneck
 def plot_bottleneck(df):
@@ -211,6 +340,7 @@ if __name__ == "__main__":
 
     X = df.drop(columns=["quality"]).values
 
+    # --- Distancias entre normalizaciones (ya existente) ---
     resultados = normalization_experiment(
         X,
         n_samples=100,
@@ -226,5 +356,23 @@ if __name__ == "__main__":
 
     plot_bottleneck(resultados)
     plot_wasserstein(resultados)
+
+    # --- NUEVO: estadisticas topologicas por normalizacion ---
+    resultados_stats = normalization_statistics_experiment(
+        X,
+        n_samples=100,
+        N=256,
+        tau=0.1
+    )
+
+    print("\nEstadisticas topologicas por normalizacion:\n")
+    print(resultados_stats.describe())
+
+    resultados_stats.to_csv(
+        "results_normalization_statistics.csv",
+        index=False
+    )
+
+    plot_statistics_comparison(resultados_stats)
 
     print("\nResultados guardados correctamente.")

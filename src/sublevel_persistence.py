@@ -45,16 +45,21 @@ def diagram_for_plot(diagram, margin = 0.1):
 # Función persistence_diagrams, calcula el diagrama de persistencia de una curva
 def persistence_diagrams(curve):
     curve = np.asarray(curve) # Nos aseguramos que curve sea un arreglo
-    
-    # Construimos el cubical complex
-    cc = gd.CubicalComplex(dimensions=[len(curve)], top_dimensional_cells = curve)
+
+    # Construimos el cubical complex PERIÓDICO sobre S^1
+    # (la curva de Andrews es periódica: t=-pi y t=pi son el mismo punto)
+    cc = gd.PeriodicCubicalComplex(
+        dimensions=[len(curve)],
+        top_dimensional_cells=curve,
+        periodic_dimensions=[True]
+    )
     cc.compute_persistence()
 
     # Extraemos el H0 y el H1
     H0 = np.array(cc.persistence_intervals_in_dimension(0))
     H1 = np.array(cc.persistence_intervals_in_dimension(1))
 
-    return H0, H1 
+    return H0, H1
 
 # Ahora calculamos la persistencia total
 def total_persistence(diagram):
@@ -166,3 +171,50 @@ if __name__ == "__main__":
 
     print("\nH1:")
     print(H1)
+
+    # =====================================================================
+    # VERIFICACIÓN: ¿el complejo periódico está funcionando correctamente?
+    # =====================================================================
+    print("\n" + "=" * 60)
+    print("VERIFICACIÓN DEL COMPLEJO PERIÓDICO")
+    print("=" * 60)
+
+    # --- Test 1: comparar contra el complejo NO periódico anterior ---
+    cc_lineal = gd.CubicalComplex(
+        dimensions=[len(curve)],
+        top_dimensional_cells=curve
+    )
+    cc_lineal.compute_persistence()
+    H0_lineal = np.array(cc_lineal.persistence_intervals_in_dimension(0))
+    H1_lineal = np.array(cc_lineal.persistence_intervals_in_dimension(1))
+
+    print(f"\n[Test 1] Complejo lineal (antiguo) vs periódico (nuevo)")
+    print(f"  H0 lineal:   {len(H0_lineal)} pares")
+    print(f"  H0 periódico:{len(H0)} pares")
+    print(f"  H1 lineal:   {len(H1_lineal)} clases")
+    print(f"  H1 periódico:{len(H1)} clases")
+    if len(H0) != len(H0_lineal) or not np.array_equal(
+        np.sort(H0_lineal, axis=0), np.sort(H0, axis=0)
+    ):
+        print("  -> OK: los diagramas son distintos, el complejo periódico "
+              "SÍ está tratando el ciclo de forma diferente al lineal.")
+    else:
+        print("  -> ADVERTENCIA: los diagramas son iguales, revisar la "
+              "implementación.")
+
+    # --- Test 2: H1 debe tener EXACTAMENTE una clase (el ciclo global S^1) ---
+    print(f"\n[Test 2] H1 debe tener 1 sola clase (el ciclo de S^1)")
+    print(f"  Número de clases en H1: {len(H1)}")
+
+    # --- Test 3: curva sintética simple, fácil de razonar a mano ---
+    print(f"\n[Test 3] Curva sintética simple: seno de un periodo")
+    t_test = np.linspace(-np.pi, np.pi, 100, endpoint=False)
+    curva_test = np.sin(t_test)
+    H0_test, H1_test = persistence_diagrams(curva_test)
+    print(f"  H0: {len(H0_test)} pares (peaks/valles locales)")
+    print(f"  H1: {len(H1_test)} clase(s)")
+    print("  Para sin(t) en un periodo completo se esperan 2 puntos "
+          "críticos (1 máximo, 1 mínimo) reflejados en H0, "
+          "y 1 sola clase en H1.")
+
+    print("\n" + "=" * 60)

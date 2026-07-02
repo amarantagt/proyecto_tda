@@ -1,0 +1,30 @@
+Resumen de la verificacion del teorema de estabilidad:
+
+  n_total: 1000
+  n_violaciones: 5
+  porcentaje_violaciones: 0.5
+  razon_promedio: 0.7533885122563959
+  razon_mediana: 0.7733089615886535
+  razon_maxima: 3.93662465461354
+
+-> ADVERTENCIA: se observaron 5 violaciones (0.50%). Revisar si son atribuibles a tolerancia numerica del solver de bottleneck o a un error de calculo.
+
+Graficos guardados en figures/.
+
+Filas que violan el teorema:
+     sample tipo_ruido  magnitud        dB  norma_inf  razon_dB_norma_inf
+82      613  gaussiano       0.1  0.828879   0.511232            1.621338
+338     486    acotado       0.2  1.866436   0.566169            3.296604
+732    1102  gaussiano       0.1  0.797510   0.538742            1.480318
+758     529    acotado       0.2  1.722512   0.437561            3.936625
+759     529    acotado       0.5  2.180332   1.110248            1.963825
+
+Muestras que violan el teorema (ya identificadas):
+  sample=613 (gaussiano, 0.1), sample=486 (acotado, 0.2),
+  sample=1102 (gaussiano, 0.1), sample=529 (acotado, 0.2 y 0.5)
+
+  -> Nota: sample=529 aparece en DOS filas distintas (magnitudes
+     0.2 y 0.5). Esto sugiere que la observación X[529] en sí misma
+     tiene una curva 'sensible' -- probablemente con muy pocos
+     picos/valles en H0 finito -- más que ser un problema de la
+     magnitud de la perturbación en particular.
