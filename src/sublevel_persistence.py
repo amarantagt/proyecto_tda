@@ -172,9 +172,6 @@ if __name__ == "__main__":
     print("\nH1:")
     print(H1)
 
-    # =====================================================================
-    # VERIFICACIÓN: ¿el complejo periódico está funcionando correctamente?
-    # =====================================================================
     print("\n" + "=" * 60)
     print("VERIFICACIÓN DEL COMPLEJO PERIÓDICO")
     print("=" * 60)
@@ -196,17 +193,16 @@ if __name__ == "__main__":
     if len(H0) != len(H0_lineal) or not np.array_equal(
         np.sort(H0_lineal, axis=0), np.sort(H0, axis=0)
     ):
-        print("  -> OK: los diagramas son distintos, el complejo periódico "
+        print("Los diagramas son distintos, el complejo periódico "
               "SÍ está tratando el ciclo de forma diferente al lineal.")
     else:
-        print("  -> ADVERTENCIA: los diagramas son iguales, revisar la "
-              "implementación.")
+        print("Los diagramas son iguales, revisar la implementación.")
 
-    # --- Test 2: H1 debe tener EXACTAMENTE una clase (el ciclo global S^1) ---
+    # Test 2: H1 debe tener EXACTAMENTE una clase (el ciclo global S^1) 
     print(f"\n[Test 2] H1 debe tener 1 sola clase (el ciclo de S^1)")
     print(f"  Número de clases en H1: {len(H1)}")
 
-    # --- Test 3: curva sintética simple, fácil de razonar a mano ---
+    # Test 3: curva sintética simple, fácil de razonar a mano
     print(f"\n[Test 3] Curva sintética simple: seno de un periodo")
     t_test = np.linspace(-np.pi, np.pi, 100, endpoint=False)
     curva_test = np.sin(t_test)
@@ -216,5 +212,3 @@ if __name__ == "__main__":
     print("  Para sin(t) en un periodo completo se esperan 2 puntos "
           "críticos (1 máximo, 1 mínimo) reflejados en H0, "
           "y 1 sola clase en H1.")
-
-    print("\n" + "=" * 60)
